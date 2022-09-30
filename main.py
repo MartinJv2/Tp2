@@ -5,9 +5,12 @@ le code fait en sorte que l`ordinateur joue un jeu de devinette avec le joueur
 """
 
 from random import randint
+essaies = 0
 
-choix_du_joueur = int(input("L`ordinateur a choisit un nombre de 1 a 5.\n\n\t Essaye de le deviner!\n\n"))
-choix_de_ordi = randint(1, 5)
+minimum = int(input("Entrez le plus petit nombre que l`ordi peut choisir"))
+maximum = int(input("Entrez le plus grand nombre que l`ordi peut choisir"))
+print("L`ordi a un nombre de ", minimum, " a", maximum, ".\n\n\t Essaye de le deviner!\n\n")
+choix_du_joueur, choix_de_ordi = int(input()), randint(minimum, maximum)
 
 
 def valeur_incorrecte_verification():
@@ -15,7 +18,6 @@ def valeur_incorrecte_verification():
     verifie si la reponse donne par le joueur est correct.
     :return:
     """
-    global choix_du_joueur
 
     if choix_du_joueur > choix_de_ordi:
         print("\tTa reponse est plus grande que celle de l`ordi\n\n")
@@ -28,17 +30,19 @@ def rejouer():
     verifie si le joueur peut rejouer. Si oui, ca le demande de rejouer.
     :return:
     """
-    global choix_de_ordi
-    global choix_du_joueur
+    global choix_de_ordi, essaies, choix_du_joueur
 
+    essaies += 1
     if choix_du_joueur == choix_de_ordi:
-        print("\tTa eu la reponse correct!!!\n\n")
+        print("\tTa eu la reponse correct!!! (", essaies, "essaies)\n\n")
         demande_de_rejouer = input("Recommencer? (non=1 oui=autre)\n\n")
         if demande_de_rejouer == "1":
             exit()
         else:
-            choix_du_joueur = int(input("L`ordinateur a choisit un nombre de 1 a 5.\n\n Essaye de le deviner!\n\n"))
-            choix_de_ordi = randint(1, 5)
+            minimum, maximum = int(input("Entrez le plus petit nombre que l`ordi peut choisir")), int(
+                input("Entrez le plus grand nombre que l`ordi peut choisir"))
+            print("L`ordi a un nombre de ", minimum, " a", maximum, ".\n\n\t Essaye de le deviner!\n\n")
+            choix_du_joueur, choix_de_ordi = int(input()), randint(minimum, maximum)
     else:
         choix_du_joueur = int(input("\tRessayez\n\n"))
 
